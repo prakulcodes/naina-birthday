@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="animation-viewport">
+
+    <!-- ======================== SCENE START : START SCREEN =============== -->
+    <div class="scene scene-start active" data-scene="start">
+      <div class="title-text">
+        <button id="startBtn" class="start-btn">Start &#9654;</button>
+      </div>
+    </div>
+
+    <!-- ======================== SCENE 0 : TITLE ======================== -->
+    <div class="scene scene-title" data-scene="0">
+      <div class="title-text">
+        <span class="title-line1">Once Upon a Time&hellip;</span>
+      </div>
+    </div>
+
+    <!-- ======================== SCENE 1 : GARDEN WALK =================== -->
+    <div class="scene scene-garden" data-scene="1">
+      <div class="sky"></div>
+      <div class="sun"><div class="sun-ray"></div></div>
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="hill hill-back"></div>
+      <div class="hill hill-front"></div>
+      <div class="ground"></div>
+      <div class="garden-path"></div>
+
+      <div class="tree tree-1"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-2"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-3"><div class="canopy"></div><div class="trunk"></div></div>
+
+      <div class="flower-row">
+        <div class="flower f1"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f2"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f3"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f4"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f5"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f6"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+      </div>
+
+      <!-- street lamp + trash can in background -->
+      <div class="street-lamp lamp-pos"><div class="lamp-head"></div><div class="lamp-pole"></div><div class="lamp-glow"></div></div>
+      <div class="trashcan trashcan-bg"><div class="trash-lid"></div><div class="trash-body"></div></div>
+
+      <!-- couple walks across -->
+      <div class="couple-group" id="coupleWalk">
+        <div class="character person1">
+          <div class="head"><img id="face-person1-s1" src="" alt="Person 1" /><div class="placeholder-face">👤</div></div>
+          <div class="body-wrap">
+            <div class="torso torso-blue"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+        <div class="character person2">
+          <div class="head"><img id="face-person2-s1" src="" alt="Person 2" /><div class="placeholder-face">👤</div></div>
+          <div class="body-wrap">
+            <div class="torso torso-pink"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="narration">On a beautiful sunny day, they went for a walk in the garden&hellip;</div>
+    </div>
+
+    <!-- ======================== SCENE 2 : THE SOUND ===================== -->
+    <div class="scene scene-sound" data-scene="2">
+      <div class="sky"></div>
+      <div class="sun"><div class="sun-ray"></div></div>
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="hill hill-back"></div>
+      <div class="hill hill-front"></div>
+      <div class="ground"></div>
+      <div class="garden-path"></div>
+
+      <div class="tree tree-1"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-2"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-3"><div class="canopy"></div><div class="trunk"></div></div>
+
+      <div class="flower-row">
+        <div class="flower f1"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f2"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f3"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f4"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f5"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f6"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+      </div>
+
+      <!-- street lamp + trash can -->
+      <div class="street-lamp lamp-pos"><div class="lamp-head"></div><div class="lamp-pole"></div><div class="lamp-glow"></div></div>
+      <div class="trashcan" id="trashcan">
+        <div class="trash-lid"></div>
+        <div class="trash-body"></div>
+        <div class="trash-stripe"></div>
+        <div class="sound-waves">
+          <div class="wave w1"></div>
+          <div class="wave w2"></div>
+          <div class="wave w3"></div>
+        </div>
+        <div class="music-notes">
+          <span class="note n1">&#9835;</span>
+          <span class="note n2">&#9834;</span>
+          <span class="note n3">&#9835;</span>
+        </div>
+      </div>
+
+      <!-- couple standing & looking -->
+      <div class="couple-standing" id="coupleStand">
+        <div class="character person1">
+          <div class="head"><img id="face-person1-s2" src="" alt="Person 1" /><div class="placeholder-face">👤</div></div>
+          <div class="question-mark">?</div>
+          <div class="body-wrap">
+            <div class="torso torso-blue"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+        <div class="character person2">
+          <div class="head"><img id="face-person2-s2" src="" alt="Person 2" /><div class="placeholder-face">👤</div></div>
+          <div class="question-mark">?</div>
+          <div class="body-wrap">
+            <div class="torso torso-pink"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="narration">Suddenly, they heard a strange sound from a trash can&hellip;</div>
+    </div>
+
+    <!-- ======================== SCENE 3 : THE DISCOVERY ================= -->
+    <div class="scene scene-discovery" data-scene="3">
+      <div class="sky"></div>
+      <div class="sun"><div class="sun-ray"></div></div>
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="hill hill-back"></div>
+      <div class="hill hill-front"></div>
+      <div class="ground"></div>
+      <div class="garden-path"></div>
+
+      <div class="tree tree-1"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-2"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-3"><div class="canopy"></div><div class="trunk"></div></div>
+
+      <div class="flower-row">
+        <div class="flower f1"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f2"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f3"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f4"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f5"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f6"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+      </div>
+
+      <!-- street lamp + open trash can -->
+      <div class="street-lamp lamp-pos"><div class="lamp-head"></div><div class="lamp-pole"></div><div class="lamp-glow"></div></div>
+      <div class="trashcan trashcan-open" id="trashcanOpen">
+        <div class="trash-lid lid-open"></div>
+        <div class="trash-body"></div>
+        <div class="trash-stripe"></div>
+        <div class="glow"></div>
+        <div class="baby-in-can">
+          <div class="character baby">
+            <div class="head baby-head">
+              <img id="face-baby-s3" src="" alt="Baby" />
+              <div class="placeholder-face placeholder-baby">👶</div>
+            </div>
+            <div class="baby-blanket"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- sparkles -->
+      <div class="sparkles">
+        <span class="sparkle sp1">✦</span>
+        <span class="sparkle sp2">✦</span>
+        <span class="sparkle sp3">✦</span>
+        <span class="sparkle sp4">✦</span>
+        <span class="sparkle sp5">✦</span>
+        <span class="sparkle sp6">✦</span>
+      </div>
+
+      <!-- couple on either side of can -->
+      <div class="couple-peeking">
+        <div class="character person1">
+          <div class="head"><img id="face-person1-s3" src="" alt="Person 1" /><div class="placeholder-face">👤</div></div>
+          <div class="body-wrap">
+            <div class="torso torso-blue"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+        <div class="character person2">
+          <div class="head"><img id="face-person2-s3" src="" alt="Person 2" /><div class="placeholder-face">👤</div></div>
+          <div class="body-wrap">
+            <div class="torso torso-pink"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="narration">They opened the lid and found&hellip; a baby!</div>
+    </div>
+
+    <!-- ======================== SCENE 4 : GOING HOME ==================== -->
+    <div class="scene scene-home" data-scene="4">
+      <div class="sky"></div>
+      <div class="sun"><div class="sun-ray"></div></div>
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="hill hill-back"></div>
+      <div class="hill hill-front"></div>
+      <div class="ground"></div>
+      <div class="garden-path"></div>
+
+      <div class="tree tree-1"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-2"><div class="canopy"></div><div class="trunk"></div></div>
+      <div class="tree tree-3"><div class="canopy"></div><div class="trunk"></div></div>
+
+      <div class="flower-row">
+        <div class="flower f1"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f2"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f3"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f4"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f5"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+        <div class="flower f6"><div class="petal-group"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="stem"></div></div>
+      </div>
+
+      <!-- house -->
+      <div class="house">
+        <div class="house-chimney">
+          <div class="chimney-smoke">
+            <span class="smoke s1"></span>
+            <span class="smoke s2"></span>
+            <span class="smoke s3"></span>
+          </div>
+        </div>
+        <div class="house-roof"></div>
+        <div class="house-body">
+          <div class="house-door"></div>
+          <div class="house-window hw1"></div>
+          <div class="house-window hw2"></div>
+        </div>
+      </div>
+
+      <!-- couple with baby walking -->
+      <div class="couple-going-home" id="coupleHome">
+        <div class="character person1">
+          <div class="head"><img id="face-person1-s4" src="" alt="Person 1" /><div class="placeholder-face">👤</div></div>
+          <div class="body-wrap">
+            <div class="torso torso-blue"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+
+        <div class="character baby-carried">
+          <div class="head baby-head">
+            <img id="face-baby-s4" src="" alt="Baby" />
+            <div class="placeholder-face placeholder-baby">👶</div>
+          </div>
+          <div class="baby-blanket-carried"></div>
+        </div>
+
+        <div class="character person2">
+          <div class="head"><img id="face-person2-s4" src="" alt="Person 2" /><div class="placeholder-face">👤</div></div>
+          <div class="body-wrap">
+            <div class="torso torso-pink"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+            <div class="legs"><div class="leg leg-left"></div><div class="leg leg-right"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- floating hearts -->
+      <div class="hearts">
+        <span class="heart h1">&#10084;</span>
+        <span class="heart h2">&#10084;</span>
+        <span class="heart h3">&#10084;</span>
+        <span class="heart h4">&#10084;</span>
+        <span class="heart h5">&#10084;</span>
+      </div>
+
+      <div class="narration">They took the little one home and lived happily ever after!</div>
+    </div>
+
+    <!-- ======================== SCENE 5 : FINALE ======================== -->
+    <div class="scene scene-finale" data-scene="5">
+      <div class="finale-bg"></div>
+      <div class="finale-content">
+        <div class="finale-text">Happy Birthday!</div>
+        <div class="finale-subtext">This is your origin story&nbsp;&#10084;</div>
+        <div class="finale-faces">
+          <div class="finale-face">
+            <img id="face-person1-finale" src="" alt="Person 1" />
+            <div class="placeholder-face">👤</div>
+          </div>
+          <div class="finale-face">
+            <img id="face-baby-finale" src="" alt="Baby" />
+            <div class="placeholder-face placeholder-baby">👶</div>
+          </div>
+          <div class="finale-face">
+            <img id="face-person2-finale" src="" alt="Person 2" />
+            <div class="placeholder-face">👤</div>
+          </div>
+        </div>
+        <button id="replayBtn" class="replay-btn">Replay &#8635;</button>
+      </div>
+      <div class="confetti-container" id="confetti"></div>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

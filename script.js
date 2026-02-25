@@ -1,0 +1,207 @@
+/* ===================================================================
+   BIRTHDAY STORY — TIMELINE CONTROLLER
+   =================================================================== */
+
+(function () {
+  "use strict";
+
+  const TOTAL_DURATION = 30;
+
+  const SCENE_TIMELINE = [
+    { scene: 0, start: 0,  end: 3  },
+    { scene: 1, start: 3,  end: 10 },
+    { scene: 2, start: 10, end: 17 },
+    { scene: 3, start: 17, end: 23 },
+    { scene: 4, start: 23, end: 28 },
+    { scene: 5, start: 28, end: 30 },
+  ];
+
+  const FACE_MAP = {
+    person1_face: [
+      "face-person1-s1",
+      "face-person1-s2",
+      "face-person1-s3",
+      "face-person1-s4",
+      "face-person1-finale",
+    ],
+    person2_face: [
+      "face-person2-s1",
+      "face-person2-s2",
+      "face-person2-s3",
+      "face-person2-s4",
+      "face-person2-finale",
+    ],
+    baby_face: [
+      "face-baby-s3",
+      "face-baby-s4",
+      "face-baby-finale",
+    ],
+  };
+
+  let elapsed = 0;
+  let running = false;
+  let lastTimestamp = null;
+  let activeScene = -1;
+
+  const progressFill = document.getElementById("progressFill"); // may be hidden
+
+  /* ── load face images from JSON ─────────────────────────── */
+
+  async function loadFaces() {
+    try {
+      const res = await fetch("images.json");
+      const data = await res.json();
+
+      Object.entries(FACE_MAP).forEach(([jsonKey, elementIds]) => {
+        const src = data[jsonKey];
+        if (!src) return;
+
+        elementIds.forEach((id) => {
+          const img = document.getElementById(id);
+          if (!img) return;
+          img.onload = () => img.classList.add("loaded");
+          img.onerror = () => img.classList.remove("loaded");
+          img.src = src;
+        });
+      });
+    } catch {
+      console.warn("Could not load images.json — using placeholders.");
+    }
+  }
+
+  /* ── scene management ───────────────────────────────────── */
+
+  const startScreen = document.querySelector('[data-scene="start"]');
+
+  function activateScene(index) {
+    if (index === activeScene) return;
+    activeScene = index;
+
+    startScreen.classList.remove("active");
+
+    document.querySelectorAll('.scene[data-scene]:not([data-scene="start"])').forEach((el) => {
+      const sceneIdx = parseInt(el.dataset.scene, 10);
+      el.classList.toggle("active", sceneIdx === index);
+    });
+
+    if (index === 5) spawnConfetti();
+  }
+
+  /* ── animation loop ─────────────────────────────────────── */
+
+  function tick(timestamp) {
+    if (!running) return;
+    if (lastTimestamp === null) lastTimestamp = timestamp;
+
+    const dt = (timestamp - lastTimestamp) / 1000;
+    lastTimestamp = timestamp;
+    elapsed += dt;
+
+    if (elapsed >= TOTAL_DURATION) {
+      elapsed = TOTAL_DURATION;
+      running = false;
+    }
+
+    if (progressFill) {
+      progressFill.style.width = (elapsed / TOTAL_DURATION) * 100 + "%";
+    }
+
+    for (const entry of SCENE_TIMELINE) {
+      if (elapsed >= entry.start && elapsed < entry.end) {
+        activateScene(entry.scene);
+        break;
+      }
+    }
+    if (elapsed >= TOTAL_DURATION) activateScene(5);
+
+    if (running) requestAnimationFrame(tick);
+  }
+
+  function startAnimation() {
+    elapsed = 0;
+    lastTimestamp = null;
+    running = true;
+    activeScene = -1;
+    if (progressFill) progressFill.style.width = "0%";
+
+    document.querySelectorAll(".scene").forEach((el) => el.classList.remove("active"));
+
+    resetAnimations();
+    requestAnimationFrame(tick);
+  }
+
+  /* ── reset CSS animations so they replay ────────────────── */
+
+  function resetAnimations() {
+    const selectors = [
+      "#coupleWalk",
+      "#coupleHome",
+      ".baby-in-can",
+      ".narration",
+      ".finale-text",
+      ".finale-subtext",
+      ".finale-faces",
+      ".replay-btn",
+    ];
+
+    selectors.forEach((sel) => {
+      document.querySelectorAll(sel).forEach((el) => {
+        el.style.animation = "none";
+        void el.offsetHeight;
+        el.style.animation = "";
+      });
+    });
+
+    const confettiContainer = document.getElementById("confetti");
+    confettiContainer.innerHTML = "";
+  }
+
+  /* ── confetti generator ─────────────────────────────────── */
+
+  function spawnConfetti() {
+    const container = document.getElementById("confetti");
+    container.innerHTML = "";
+
+    const colors = [
+      "#ffd700", "#e91e63", "#4caf50", "#2196f3",
+      "#ff9800", "#9c27b0", "#00bcd4", "#ff5722",
+    ];
+
+    for (let i = 0; i < 60; i++) {
+      const piece = document.createElement("span");
+      piece.classList.add("confetti-piece");
+
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const left = Math.random() * 100;
+      const delay = Math.random() * 2;
+      const duration = 2 + Math.random() * 2;
+      const size = 6 + Math.random() * 8;
+
+      piece.style.cssText = `
+        left: ${left}%;
+        background: ${color};
+        width: ${size}px;
+        height: ${size * 1.6}px;
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+      `;
+      container.appendChild(piece);
+    }
+  }
+
+  /* ── start & replay buttons ──────────────────────────────── */
+
+  document.getElementById("startBtn").addEventListener("click", () => {
+    startScreen.classList.remove("active");
+    startAnimation();
+  });
+
+  document.getElementById("replayBtn").addEventListener("click", () => {
+    startScreen.classList.remove("active");
+    startAnimation();
+  });
+
+  /* ── init ────────────────────────────────────────────────── */
+
+  loadFaces();
+})();
