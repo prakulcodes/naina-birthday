@@ -70,7 +70,6 @@
     "audio_scene_2",
     "audio_scene_3",
     "audio_scene_4",
-    "audio_scene_5",
   ];
 
   const SCROLL_AUDIO_MAP = {
@@ -95,6 +94,7 @@
 
   const audioCache = {};
   let currentAudio = null;
+  let bgMusic = null;
   const playedScrollAudio = new Set();
 
   const progressFill = document.getElementById("progressFill");
@@ -118,11 +118,22 @@
     currentAudio = audio;
   }
 
+  function startBgMusic() {
+    if (!bgMusic || isMuted) return;
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(() => {});
+  }
+
   function toggleMute() {
     isMuted = !isMuted;
     const btn = document.getElementById("muteBtn");
     if (btn) btn.textContent = isMuted ? "\uD83D\uDD07" : "\uD83D\uDD0A";
-    if (isMuted) stopCurrentAudio();
+    if (isMuted) {
+      stopCurrentAudio();
+      if (bgMusic) bgMusic.pause();
+    } else if (bgMusic && !bgMusic.ended && bgMusic.src) {
+      bgMusic.play().catch(() => {});
+    }
   }
 
   /* ── load images + audio from JSON ──────────────────────── */
@@ -158,6 +169,14 @@
         audio.src = src;
         audioCache[key] = audio;
       });
+
+      if (data.background_music) {
+        bgMusic = new Audio();
+        bgMusic.preload = "auto";
+        bgMusic.loop = true;
+        bgMusic.volume = 0.02;
+        bgMusic.src = data.background_music;
+      }
     } catch {
       console.warn("Could not load images.json — using placeholders.");
     }
@@ -319,6 +338,7 @@
 
   document.getElementById("startBtn").addEventListener("click", () => {
     startScreen.classList.remove("active");
+    startBgMusic();
     startAnimation();
   });
 
@@ -396,6 +416,7 @@
 
   document.getElementById("replayBtnScroll").addEventListener("click", () => {
     startScreen.classList.remove("active");
+    startBgMusic();
     startAnimation();
   });
 

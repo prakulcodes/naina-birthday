@@ -1,6 +1,6 @@
 # Birthday Story Animation
 
-An animated story website built with HTML, CSS, and JavaScript — designed as a birthday gift.
+A 30-second animated story website built with HTML, CSS, and JavaScript — designed as a birthday gift.
 
 ---
 
@@ -48,5 +48,4 @@ An animated story website built with HTML, CSS, and JavaScript — designed as a
 - **"Happy Birthday!"** pops in with golden text and glow.
 - **"This is your origin story ❤"** fades in below.
 - All three faces (Person 1, Baby, Person 2) are displayed in golden-bordered circles.
-
 - A **Replay** button appears to restart the animation.
