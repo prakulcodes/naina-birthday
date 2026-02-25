@@ -35,5 +35,24 @@
 
   "today_photo": "",
 
-  "finale_photo": ""
+  "finale_photo": "",
+
+  "audio_scene_0": "",
+  "audio_scene_1": "",
+  "audio_scene_2": "",
+  "audio_scene_3": "",
+  "audio_scene_4": "",
+  "audio_scene_5": "",
+
+  "audio_truth": "",
+  "audio_baby": "",
+  "audio_childhood": "",
+  "audio_sibling_intro": "",
+  "audio_sibling_life": "",
+  "audio_teenage": "",
+  "audio_adult": "",
+  "audio_real_truth": "",
+  "audio_parents": "",
+  "audio_today": "",
+  "audio_finale": ""
 }

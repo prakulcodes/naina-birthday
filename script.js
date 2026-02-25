@@ -64,16 +64,70 @@
     finale_photo:       ["img-finale"],
   };
 
+  const SCENE_AUDIO_KEYS = [
+    "audio_scene_0",
+    "audio_scene_1",
+    "audio_scene_2",
+    "audio_scene_3",
+    "audio_scene_4",
+    "audio_scene_5",
+  ];
+
+  const SCROLL_AUDIO_MAP = {
+    sectionTruth:       "audio_truth",
+    sectionBaby:        "audio_baby",
+    sectionChildhood:   "audio_childhood",
+    sectionSiblingIntro:"audio_sibling_intro",
+    sectionSiblingLife: "audio_sibling_life",
+    sectionTeenage:     "audio_teenage",
+    sectionAdult:       "audio_adult",
+    sectionRealTruth:   "audio_real_truth",
+    sectionParents:     "audio_parents",
+    sectionToday:       "audio_today",
+    sectionFinale:      "audio_finale",
+  };
+
   let elapsed = 0;
   let running = false;
   let lastTimestamp = null;
   let activeScene = -1;
+  let isMuted = false;
 
-  const progressFill = document.getElementById("progressFill"); // may be hidden
+  const audioCache = {};
+  let currentAudio = null;
+  const playedScrollAudio = new Set();
 
-  /* ── load face images from JSON ─────────────────────────── */
+  const progressFill = document.getElementById("progressFill");
 
-  async function loadFaces() {
+  /* ── audio helpers ───────────────────────────────────────── */
+
+  function stopCurrentAudio() {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = null;
+    }
+  }
+
+  function playAudio(key) {
+    stopCurrentAudio();
+    const audio = audioCache[key];
+    if (!audio || isMuted) return;
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+    currentAudio = audio;
+  }
+
+  function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById("muteBtn");
+    if (btn) btn.textContent = isMuted ? "\uD83D\uDD07" : "\uD83D\uDD0A";
+    if (isMuted) stopCurrentAudio();
+  }
+
+  /* ── load images + audio from JSON ──────────────────────── */
+
+  async function loadAssets() {
     try {
       const res = await fetch("images.json");
       const data = await res.json();
@@ -90,6 +144,19 @@
           img.onerror = () => img.classList.remove("loaded");
           img.src = src;
         });
+      });
+
+      const allAudioKeys = [
+        ...SCENE_AUDIO_KEYS,
+        ...Object.values(SCROLL_AUDIO_MAP),
+      ];
+      allAudioKeys.forEach((key) => {
+        const src = data[key];
+        if (!src) return;
+        const audio = new Audio();
+        audio.preload = "auto";
+        audio.src = src;
+        audioCache[key] = audio;
       });
     } catch {
       console.warn("Could not load images.json — using placeholders.");
@@ -128,6 +195,9 @@
     }
 
     if (index === 5) enterStoryMode();
+
+    const audioKey = SCENE_AUDIO_KEYS[index];
+    if (audioKey) playAudio(audioKey);
   }
 
   /* ── story-mode transition ─────────────────────────────── */
@@ -174,6 +244,9 @@
     running = true;
     activeScene = -1;
     if (progressFill) progressFill.style.width = "0%";
+
+    stopCurrentAudio();
+    playedScrollAudio.clear();
 
     document.body.classList.remove("story-mode");
     window.scrollTo(0, 0);
@@ -252,7 +325,7 @@
   /* ── scroll story: reveal observer ─────────────────────── */
 
   function initScrollReveals() {
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -267,7 +340,23 @@
       { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
     );
 
-    document.querySelectorAll(".reveal-on-scroll").forEach((el) => observer.observe(el));
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => revealObserver.observe(el));
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const sectionId = entry.target.id;
+          const audioKey = SCROLL_AUDIO_MAP[sectionId];
+          if (!audioKey || playedScrollAudio.has(sectionId)) return;
+          playedScrollAudio.add(sectionId);
+          playAudio(audioKey);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    document.querySelectorAll(".story-section[id]").forEach((el) => sectionObserver.observe(el));
   }
 
   /* ── scroll confetti ───────────────────────────────────── */
@@ -310,8 +399,12 @@
     startAnimation();
   });
 
+  /* ── mute button ─────────────────────────────────────────── */
+
+  document.getElementById("muteBtn").addEventListener("click", toggleMute);
+
   /* ── init ────────────────────────────────────────────────── */
 
-  loadFaces();
+  loadAssets();
   initScrollReveals();
 })();
