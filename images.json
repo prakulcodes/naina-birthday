@@ -1,7 +1,7 @@
 {
-  "person1_face": "",
-  "person2_face": "",
-  "baby_face": "",
+  "person1_face": "photos/papa.png",
+  "person2_face": "photos/mumma.png",
+  "baby_face": "photos/06.png",
   "truth_photo": "",
   "baby_photo_1": "",
   "baby_photo_2": "",
