@@ -54,7 +54,9 @@ body {
   font-weight: 600;
   padding: .6em 1.6em;
   border-radius: 30px;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  max-width: 85%;
   opacity: 0;
   animation: fadeUp .8s ease forwards;
   animation-delay: 1s;
@@ -1055,9 +1057,223 @@ body {
 }
 
 /* ===================================================================
+   STORY MODE — SCROLLABLE SECTIONS (SCENES 5+)
+   =================================================================== */
+
+body.story-mode {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+body.story-mode #animation-viewport {
+  z-index: 1;
+}
+
+#scroll-story {
+  display: none;
+  position: relative;
+  z-index: 10;
+  margin-top: 100vh;
+}
+body.story-mode #scroll-story {
+  display: block;
+}
+
+/* ─── TRANSITION SCENE (animation scene 5) ────────────────── */
+
+.scene-transition { z-index: 60; }
+
+.transition-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 30px;
+}
+.transition-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  color: #ffd700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, .5);
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: .5s;
+}
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 1.5s;
+}
+.scroll-indicator span {
+  color: rgba(255, 255, 255, .7);
+  font-size: clamp(.7rem, 1.5vw, .95rem);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.scroll-arrow {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: #ffd700;
+  animation: bounceArrow 1.5s ease-in-out infinite;
+}
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(10px); }
+}
+
+/* ─── SCROLL SECTIONS ─────────────────────────────────────── */
+
+.story-section {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.section-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 60px 5vw;
+}
+.section-icon {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, .3));
+}
+.section-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, .4);
+  text-align: center;
+}
+
+/* ─── SECTION BACKGROUNDS ─────────────────────────────────── */
+
+.section-truth        { background: radial-gradient(ellipse at center, #2d1b69 0%, #0f0c29 100%); }
+.section-baby         { background: linear-gradient(180deg, #2c1810 0%, #1a0f06 100%); }
+.section-childhood    { background: linear-gradient(180deg, #0a2e38 0%, #0d1b2a 100%); }
+.section-sibling-intro{ background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 100%); }
+.section-sibling-life { background: linear-gradient(180deg, #2a1034 0%, #15091c 100%); }
+.section-teenage      { background: linear-gradient(180deg, #2e1525 0%, #1a0c16 100%); }
+.section-adult        { background: linear-gradient(180deg, #0f1a2e 0%, #0a1020 100%); }
+.section-real-truth   { background: radial-gradient(ellipse at center, #1e1410 0%, #0f0a06 100%); }
+.section-parents      { background: linear-gradient(180deg, #1e1a10 0%, #0f0d06 100%); }
+.section-today        { background: radial-gradient(ellipse at center, #2a1040 0%, #150820 100%); }
+.section-finale-scroll{ background: radial-gradient(ellipse at center, #1a0533 0%, #0a0a0f 100%); }
+
+/* ─── SCROLL NARRATION (subtitle style) ───────────────────── */
+
+.scroll-narration {
+  background: rgba(0, 0, 0, .55);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: clamp(.8rem, 2vw, 1.1rem);
+  font-weight: 600;
+  padding: 1em 2em;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 1.8;
+  width: 100%;
+}
+
+/* ─── PHOTO GRID ──────────────────────────────────────────── */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+.photo-slot {
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, .08);
+  border: 2px dashed rgba(255, 255, 255, .2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: border-color .3s ease;
+}
+.photo-slot:hover {
+  border-color: rgba(255, 215, 0, .4);
+}
+.photo-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  position: absolute;
+  inset: 0;
+}
+.photo-slot img[src]:not([src=""]) {
+  display: block;
+}
+.photo-slot img[src]:not([src=""]) + span {
+  display: none;
+}
+.photo-slot span {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  opacity: .4;
+}
+
+/* ─── REVEAL ON SCROLL ────────────────────────────────────── */
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── FINALE SCROLL SECTION ───────────────────────────────── */
+
+.finale-birthday-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  color: #ffd700;
+  text-shadow: 0 0 40px rgba(255, 215, 0, .6), 0 4px 20px rgba(0, 0, 0, .3);
+  text-align: center;
+}
+.finale-closing {
+  font-style: italic;
+}
+.replay-btn-scroll {
+  opacity: 1;
+  animation: none;
+  margin-top: 20px;
+}
+.section-finale-scroll .confetti-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* ===================================================================
    RESPONSIVE TWEAKS
    =================================================================== */
 
 @media (max-width: 600px) {
-  .narration { white-space: normal; text-align: center; max-width: 90%; }
+  .narration { max-width: 90%; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-inner { padding: 30px 15px; }
+  .scroll-narration { padding: .8em 1.2em; }
 }

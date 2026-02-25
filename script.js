@@ -5,15 +5,15 @@
 (function () {
   "use strict";
 
-  const TOTAL_DURATION = 30;
+  const TOTAL_DURATION = 60;
 
   const SCENE_TIMELINE = [
-    { scene: 0, start: 0,  end: 3  },
-    { scene: 1, start: 3,  end: 10 },
-    { scene: 2, start: 10, end: 17 },
-    { scene: 3, start: 17, end: 23 },
-    { scene: 4, start: 23, end: 28 },
-    { scene: 5, start: 28, end: 30 },
+    { scene: 0, start: 0,  end: 10 },
+    { scene: 1, start: 10, end: 20 },
+    { scene: 2, start: 20, end: 30 },
+    { scene: 3, start: 30, end: 40 },
+    { scene: 4, start: 40, end: 50 },
+    { scene: 5, start: 50, end: 60 },
   ];
 
   const FACE_MAP = {
@@ -73,6 +73,12 @@
 
   const startScreen = document.querySelector('[data-scene="start"]');
 
+  function restartElement(el) {
+    el.style.animation = "none";
+    void el.offsetHeight;
+    el.style.animation = "";
+  }
+
   function activateScene(index) {
     if (index === activeScene) return;
     activeScene = index;
@@ -84,7 +90,25 @@
       el.classList.toggle("active", sceneIdx === index);
     });
 
-    if (index === 5) spawnConfetti();
+    if (index === 1) {
+      const el = document.getElementById("coupleWalk");
+      if (el) restartElement(el);
+    }
+
+    if (index === 4) {
+      const el = document.getElementById("coupleHome");
+      if (el) restartElement(el);
+    }
+
+    if (index === 5) enterStoryMode();
+  }
+
+  /* ── story-mode transition ─────────────────────────────── */
+
+  function enterStoryMode() {
+    setTimeout(() => {
+      document.body.classList.add("story-mode");
+    }, 2000);
   }
 
   /* ── animation loop ─────────────────────────────────────── */
@@ -124,6 +148,9 @@
     activeScene = -1;
     if (progressFill) progressFill.style.width = "0%";
 
+    document.body.classList.remove("story-mode");
+    window.scrollTo(0, 0);
+
     document.querySelectorAll(".scene").forEach((el) => el.classList.remove("active"));
 
     resetAnimations();
@@ -134,26 +161,25 @@
 
   function resetAnimations() {
     const selectors = [
-      "#coupleWalk",
-      "#coupleHome",
       ".baby-in-can",
       ".narration",
-      ".finale-text",
-      ".finale-subtext",
-      ".finale-faces",
-      ".replay-btn",
+      ".transition-text",
+      ".scroll-indicator",
     ];
 
     selectors.forEach((sel) => {
-      document.querySelectorAll(sel).forEach((el) => {
-        el.style.animation = "none";
-        void el.offsetHeight;
-        el.style.animation = "";
-      });
+      document.querySelectorAll(sel).forEach((el) => restartElement(el));
     });
 
     const confettiContainer = document.getElementById("confetti");
-    confettiContainer.innerHTML = "";
+    if (confettiContainer) confettiContainer.innerHTML = "";
+
+    const confettiScroll = document.getElementById("confettiScroll");
+    if (confettiScroll) confettiScroll.innerHTML = "";
+
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+      el.classList.remove("revealed");
+    });
   }
 
   /* ── confetti generator ─────────────────────────────────── */
@@ -196,7 +222,63 @@
     startAnimation();
   });
 
-  document.getElementById("replayBtn").addEventListener("click", () => {
+  /* ── scroll story: reveal observer ─────────────────────── */
+
+  function initScrollReveals() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+
+            if (entry.target.classList.contains("finale-birthday-text")) {
+              spawnScrollConfetti();
+            }
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => observer.observe(el));
+  }
+
+  /* ── scroll confetti ───────────────────────────────────── */
+
+  function spawnScrollConfetti() {
+    const container = document.getElementById("confettiScroll");
+    if (!container || container.children.length > 0) return;
+
+    const colors = [
+      "#ffd700", "#e91e63", "#4caf50", "#2196f3",
+      "#ff9800", "#9c27b0", "#00bcd4", "#ff5722",
+    ];
+
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElement("span");
+      piece.classList.add("confetti-piece");
+
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const left = Math.random() * 100;
+      const delay = Math.random() * 2;
+      const duration = 2 + Math.random() * 2;
+      const size = 6 + Math.random() * 8;
+
+      piece.style.cssText = `
+        left: ${left}%;
+        background: ${color};
+        width: ${size}px;
+        height: ${size * 1.6}px;
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+      `;
+      container.appendChild(piece);
+    }
+  }
+
+  /* ── scroll replay button ──────────────────────────────── */
+
+  document.getElementById("replayBtnScroll").addEventListener("click", () => {
     startScreen.classList.remove("active");
     startAnimation();
   });
@@ -204,4 +286,5 @@
   /* ── init ────────────────────────────────────────────────── */
 
   loadFaces();
+  initScrollReveals();
 })();
