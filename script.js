@@ -174,7 +174,7 @@
         bgMusic = new Audio();
         bgMusic.preload = "auto";
         bgMusic.loop = true;
-        bgMusic.volume = 0.02;
+        bgMusic.volume = 0.07;
         bgMusic.src = data.background_music;
       }
     } catch {
