@@ -8,12 +8,12 @@
   const TOTAL_DURATION = 60;
 
   const SCENE_TIMELINE = [
-    { scene: 0, start: 0,  end: 10 },
-    { scene: 1, start: 10, end: 20 },
-    { scene: 2, start: 20, end: 30 },
-    { scene: 3, start: 30, end: 40 },
-    { scene: 4, start: 40, end: 50 },
-    { scene: 5, start: 50, end: 60 },
+    { scene: 0, start: 0, end: 5 },
+    { scene: 1, start: 5, end: 15 },
+    { scene: 2, start: 15, end: 25 },
+    { scene: 3, start: 25, end: 35 },
+    { scene: 4, start: 35, end: 45 },
+    { scene: 5, start: 45, end: 55 },
   ];
 
   const FACE_MAP = {
@@ -39,29 +39,29 @@
   };
 
   const PHOTO_MAP = {
-    truth_photo:        ["img-truth"],
-    baby_photo_1:       ["img-baby-1"],
-    baby_photo_2:       ["img-baby-2"],
-    baby_photo_3:       ["img-baby-3"],
-    childhood_photo_1:  ["img-childhood-1"],
-    childhood_photo_2:  ["img-childhood-2"],
-    childhood_photo_3:  ["img-childhood-3"],
-    sibling_intro_photo:["img-sibling-intro"],
-    sibling_photo_1:    ["img-sibling-1"],
-    sibling_photo_2:    ["img-sibling-2"],
-    sibling_photo_3:    ["img-sibling-3"],
-    teenage_photo_1:    ["img-teenage-1"],
-    teenage_photo_2:    ["img-teenage-2"],
-    teenage_photo_3:    ["img-teenage-3"],
-    adult_photo_1:      ["img-adult-1"],
-    adult_photo_2:      ["img-adult-2"],
-    adult_photo_3:      ["img-adult-3"],
-    real_truth_photo:   ["img-real-truth"],
-    family_photo_1:     ["img-family-1"],
-    family_photo_2:     ["img-family-2"],
-    family_photo_3:     ["img-family-3"],
-    today_photo:        ["img-today"],
-    finale_photo:       ["img-finale"],
+    truth_photo: ["img-truth"],
+    baby_photo_1: ["img-baby-1"],
+    baby_photo_2: ["img-baby-2"],
+    baby_photo_3: ["img-baby-3"],
+    childhood_photo_1: ["img-childhood-1"],
+    childhood_photo_2: ["img-childhood-2"],
+    childhood_photo_3: ["img-childhood-3"],
+    sibling_intro_photo: ["img-sibling-intro"],
+    sibling_photo_1: ["img-sibling-1"],
+    sibling_photo_2: ["img-sibling-2"],
+    sibling_photo_3: ["img-sibling-3"],
+    teenage_photo_1: ["img-teenage-1"],
+    teenage_photo_2: ["img-teenage-2"],
+    teenage_photo_3: ["img-teenage-3"],
+    adult_photo_1: ["img-adult-1"],
+    adult_photo_2: ["img-adult-2"],
+    adult_photo_3: ["img-adult-3"],
+    real_truth_photo: ["img-real-truth"],
+    family_photo_1: ["img-family-1"],
+    family_photo_2: ["img-family-2"],
+    family_photo_3: ["img-family-3"],
+    today_photo: ["img-today"],
+    finale_photo: ["img-finale"],
   };
 
   const SCENE_AUDIO_KEYS = [
@@ -73,17 +73,17 @@
   ];
 
   const SCROLL_AUDIO_MAP = {
-    sectionTruth:       "audio_truth",
-    sectionBaby:        "audio_baby",
-    sectionChildhood:   "audio_childhood",
-    sectionSiblingIntro:"audio_sibling_intro",
+    sectionTruth: "audio_truth",
+    sectionBaby: "audio_baby",
+    sectionChildhood: "audio_childhood",
+    sectionSiblingIntro: "audio_sibling_intro",
     sectionSiblingLife: "audio_sibling_life",
-    sectionTeenage:     "audio_teenage",
-    sectionAdult:       "audio_adult",
-    sectionRealTruth:   "audio_real_truth",
-    sectionParents:     "audio_parents",
-    sectionToday:       "audio_today",
-    sectionFinale:      "audio_finale",
+    sectionTeenage: "audio_teenage",
+    sectionAdult: "audio_adult",
+    sectionRealTruth: "audio_real_truth",
+    sectionParents: "audio_parents",
+    sectionToday: "audio_today",
+    sectionFinale: "audio_finale",
   };
 
   let elapsed = 0;
@@ -114,14 +114,14 @@
     const audio = audioCache[key];
     if (!audio || isMuted) return;
     audio.currentTime = 0;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
     currentAudio = audio;
   }
 
   function startBgMusic() {
     if (!bgMusic || isMuted) return;
     bgMusic.currentTime = 0;
-    bgMusic.play().catch(() => {});
+    bgMusic.play().catch(() => { });
   }
 
   function toggleMute() {
@@ -132,7 +132,7 @@
       stopCurrentAudio();
       if (bgMusic) bgMusic.pause();
     } else if (bgMusic && !bgMusic.ended && bgMusic.src) {
-      bgMusic.play().catch(() => {});
+      bgMusic.play().catch(() => { });
     }
   }
 
