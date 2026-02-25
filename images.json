@@ -1,5 +1,39 @@
 {
   "person1_face": "",
   "person2_face": "",
-  "baby_face": ""
+  "baby_face": "",
+
+  "truth_photo": "",
+
+  "baby_photo_1": "",
+  "baby_photo_2": "",
+  "baby_photo_3": "",
+
+  "childhood_photo_1": "",
+  "childhood_photo_2": "",
+  "childhood_photo_3": "",
+
+  "sibling_intro_photo": "",
+
+  "sibling_photo_1": "",
+  "sibling_photo_2": "",
+  "sibling_photo_3": "",
+
+  "teenage_photo_1": "",
+  "teenage_photo_2": "",
+  "teenage_photo_3": "",
+
+  "adult_photo_1": "",
+  "adult_photo_2": "",
+  "adult_photo_3": "",
+
+  "real_truth_photo": "",
+
+  "family_photo_1": "",
+  "family_photo_2": "",
+  "family_photo_3": "",
+
+  "today_photo": "",
+
+  "finale_photo": ""
 }

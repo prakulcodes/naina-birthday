@@ -38,6 +38,32 @@
     ],
   };
 
+  const PHOTO_MAP = {
+    truth_photo:        ["img-truth"],
+    baby_photo_1:       ["img-baby-1"],
+    baby_photo_2:       ["img-baby-2"],
+    baby_photo_3:       ["img-baby-3"],
+    childhood_photo_1:  ["img-childhood-1"],
+    childhood_photo_2:  ["img-childhood-2"],
+    childhood_photo_3:  ["img-childhood-3"],
+    sibling_intro_photo:["img-sibling-intro"],
+    sibling_photo_1:    ["img-sibling-1"],
+    sibling_photo_2:    ["img-sibling-2"],
+    sibling_photo_3:    ["img-sibling-3"],
+    teenage_photo_1:    ["img-teenage-1"],
+    teenage_photo_2:    ["img-teenage-2"],
+    teenage_photo_3:    ["img-teenage-3"],
+    adult_photo_1:      ["img-adult-1"],
+    adult_photo_2:      ["img-adult-2"],
+    adult_photo_3:      ["img-adult-3"],
+    real_truth_photo:   ["img-real-truth"],
+    family_photo_1:     ["img-family-1"],
+    family_photo_2:     ["img-family-2"],
+    family_photo_3:     ["img-family-3"],
+    today_photo:        ["img-today"],
+    finale_photo:       ["img-finale"],
+  };
+
   let elapsed = 0;
   let running = false;
   let lastTimestamp = null;
@@ -52,7 +78,8 @@
       const res = await fetch("images.json");
       const data = await res.json();
 
-      Object.entries(FACE_MAP).forEach(([jsonKey, elementIds]) => {
+      const allMaps = { ...FACE_MAP, ...PHOTO_MAP };
+      Object.entries(allMaps).forEach(([jsonKey, elementIds]) => {
         const src = data[jsonKey];
         if (!src) return;
 

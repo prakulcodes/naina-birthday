@@ -1179,13 +1179,13 @@ body.story-mode #scroll-story {
   background: rgba(0, 0, 0, .55);
   backdrop-filter: blur(6px);
   color: #fff;
-  font-size: clamp(.8rem, 2vw, 1.1rem);
+  font-size: clamp(0.7rem, 1.8vw, 1.05rem);
   font-weight: 600;
-  padding: 1em 2em;
-  border-radius: 20px;
+  padding: .6em 1.6em;
+  border-radius: 30px;
   text-align: center;
   line-height: 1.8;
-  width: 100%;
+  max-width: 90%;
 }
 
 /* ─── PHOTO GRID ──────────────────────────────────────────── */
@@ -1195,6 +1195,10 @@ body.story-mode #scroll-story {
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   width: 100%;
+}
+.photo-grid:has(.photo-slot:only-child) {
+  grid-template-columns: 1fr;
+  max-width: calc((100% - 24px) / 3);
 }
 .photo-slot {
   aspect-ratio: 1;
